@@ -1683,12 +1683,12 @@ function Install-Shortcut {
     if (-not (Test-Path $profileDir)) { New-Item -ItemType Directory -Path $profileDir -Force | Out-Null }
     if (-not (Test-Path $profilePath)) { New-Item -ItemType File -Path $profilePath -Force | Out-Null }
 
-    $marker = '# openclawctl-shortcut'
+    $markerV2 = '# openclawctl-oc-v2'
     $profileContent = Get-Content $profilePath -Raw -ErrorAction SilentlyContinue
-    if (-not $profileContent -or $profileContent -notmatch [regex]::Escape($marker)) {
+    if (-not $profileContent -or $profileContent -notmatch [regex]::Escape($markerV2)) {
         $block = @"
 
-$marker
+$markerV2
 function oc { irm https://raw.githubusercontent.com/byJoey/openclawctl/main/openclaw.ps1 | iex }
 "@
         Add-Content -Path $profilePath -Value $block -Encoding UTF8
